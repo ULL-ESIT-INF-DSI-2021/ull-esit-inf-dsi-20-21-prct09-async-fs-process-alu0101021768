@@ -59,3 +59,41 @@ Sin embargo, si no se realiza ningún cambio sobre el fichero a vigilar, simplem
 
 ¿Para qué sirve el objeto `constants`?
 El objeto constants sirve para utilizar todo tipo de flags que indiquen si un fichero o directorio es visible, legible, editable o ejecutable por el proceso invocante. Hay una gran variedad de constantes, pero las usadas en el método access son precisamente las que comento: F_OK - visible flag, R_OK - read flag, W_OK - write flag, X_OK - execute flag.
+
+## Ejercicio 2
+
+Para este ejercicio el primer paso fue plantear el comando de terminal que me proporcionaría información sobre las líneas, palabras o caracteres de un fichero, siendo en este caso el comando `wc`.
+
+Este comando, si se ejecuta en la terminal poniendo detrás un fichero, lo que mostrará por pantalla será tanto el número de lineas como el de palabras y caracteres, además del nombre del fichero. Pero también es de utilidad saber que el comando puede ser ejecutado con diversas opciones que permiten conseguir mostrar cada una de estos datos por separado:
+
+- Opción `-l` - muestra el número de líneas
+- Opción `-w` - muestra el número de palabras
+- Opción `-m` - muestra el número de caracteres
+
+Por lo tanto, ya sabemos que si gestionamos los comandos introducidos por la terminal, podemos seleccionar las opciones que queramos para ejecutar sobre nuestro fichero.
+
+En este caso, como hay que plantear una solución en la que se use el método `pipe` de `Stream` y otra solución en la que no se use, lo que hize fue tener dos archivos separados, uno para cada solución.
+
+### Ejercicio 2 - Primera solución
+
+En la primera solución, hago `spawn` de un proceso `wc` con sus correspondientes opciones y de un proceso `cat`, con la intención de utilizar este último para mostrar el contenido del fichero, y redirigirlo por su salida estándar a la entrada estándar del comando `wc`.
+
+![Spawn de procesos](img/spawns-a.png)
+
+De esta manera, podemos controlar mediante los streams de entrada y salida de `wc` qué es lo que queremos hacer con los datos que le han sido enviados. En este caso, almacenamos todos los datos en una variable y luego los mostramos en el evento `close` del comando `wc` haciendo uso de la salida estándar del `process` para escribir por pantalla.
+
+![Escritura mediante procesos](img/write-a.png)
+
+Entre medio de estas operaciones he realizado algunas otras operaciones para formatear un poco la salida y que sea más elegante, pero no es relevante en cuestión de lo solicitado en el ejercicio.
+
+### Ejercicio 2 - Segunda solución
+
+En esta segunda solución hago spawn de los mismos procesos, sin embargo, como no puedo usar el métodos `pipe`, hago uso de los `Streams` para manejar los datos. Por lo tanto, la salida del comando `cat` la escribo en la entrada del comando `wc` y cuando he terminado de escribir envío también un evento de finalización de escritura para notificar a `wc` de que ya terminé de escribir. Luego simplemente voy acumulando la información recibida y al salir la escribo haciendo uso de la salida estándar del `process` para escribir por pantalla.
+
+![Escritura mediante procesos](img/write-b.png)
+
+Cabe destacar que ambas soluciones se comportan exactamente igual ante las mismas entradas y que para el procesado de los comandos he utilizado el paquete `yargs`.
+
+En cuanto al manejo de errores, he tratado de controlar todas las situaciones posibles como podrían ser rutas erróneas, falta de comandos a la hora de ejecutar el programa, entre otros.
+
+## Ejercicio 3

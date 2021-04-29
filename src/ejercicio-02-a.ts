@@ -49,8 +49,8 @@ yargs.command({
         const filename = argv.path;
         const cat = spawn('cat', [filename]);
         const wc = spawn('wc', [options]);
-
         cat.stdout.pipe(wc.stdin);
+
         let selectedOptions = `${filename} information\n\t`;
         parametersOptions.forEach((option, index) => {
           if (options.includes(option)) {
