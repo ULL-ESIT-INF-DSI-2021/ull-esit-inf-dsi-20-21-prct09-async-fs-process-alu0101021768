@@ -2,6 +2,10 @@ import * as fs from 'fs';
 import * as yargs from 'yargs';
 import {spawn} from 'child_process';
 
+/**
+ * @description Command utilitie from yargs package that allows us to
+ * interpret command line commands easily
+ */
 yargs.command({
   command: 'info',
   describe: 'Gives information about a specific file',
