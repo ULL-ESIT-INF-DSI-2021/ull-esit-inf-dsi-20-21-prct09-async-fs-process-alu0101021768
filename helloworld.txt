@@ -1,3 +1,1 @@
-Hola, 
-mundo.
-¿Que tal?
+Hola, mundo.

@@ -130,3 +130,5 @@ Pues en este caso haría uso de la función `readFile` para abrir el fichero y y
 ¿Cómo harías para que no solo se observase el directorio de un único usuario sino todos los directorios correspondientes a los diferentes usuarios de la aplicación de notas?
 
 Pues almacenaría las rutas de todos los usuarios a observar sus directorios y me los recorrería mientras para cada uno de ellos pondría un `watch`, de esta manera podría ir controlando los cambios de todos los ficheros.
+
+## Ejercicio 4

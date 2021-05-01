@@ -2,7 +2,6 @@ import {existsSync} from 'fs';
 import {readFile} from 'fs';
 import {watch} from 'fs';
 import * as yargs from 'yargs';
-// import { spawn } from 'child_process';
 
 /**
  * @description Command utilitie from yargs package that allows us to
