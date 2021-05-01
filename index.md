@@ -96,4 +96,37 @@ Cabe destacar que ambas soluciones se comportan exactamente igual ante las misma
 
 En cuanto al manejo de errores, he tratado de controlar todas las situaciones posibles como podrían ser rutas erróneas, falta de comandos a la hora de ejecutar el programa, entre otros.
 
+### Respuesta a las preguntas del ejercicio 2
+
+¿Qué sucede si indica desde la línea de comandos un fichero que no existe o una opción no válida?
+
+Pues en este caso se mostrará un error debido a que el path hacia el archivo no es el correcto.
+
 ## Ejercicio 3
+
+Para solucionar este ejercicio he creado un directorio dentro del directorio `src` donde he añadido todo el código fuente asociado a la anterior práctica, que se corresponde con la aplicación de procesamiento de notas de texto. Además de esto, he creado un nuevo fichero donde planteo el procesamiento de los comandos mediante `yargs` como en el resto de los ejercicios y además la lógica necesaria para detectar los cambios producidos en los directorios a vigilar.
+
+Primero que nada, hay que tener en cuenta que para este ejercicio recogeremos por terminal tanto la ruta al directorio a observar como el nombre del usuario propietario del diretorio.
+Luego de recoger ambos datos compruebo que existe la ruta indicada hacia el directorio exista, puesto que en caso contrario mostraré un error.
+En caso de que si exista dicha ruta lo que haré será invocar a la función `watch` sobre dicho directorio y añadiendo además como opciones una callback que recibe dos parámetros en este caso, uno corresponderá con el tipo de evento que se pueda producir sobre el directorio y también un parámetro para el nombre del fichero sobre el que se produce el evento.
+
+Por lo tanto, sólo queda controlar los mensajes que queramos mostrar según los eventos que se sucedan, así que para ello si el evento es de tipo `rename` uso la función `readFile`
+para abrir el fichero sobre el que se produce el evento y si se produce algún error al intentar abrirlo, significa que el archivo fue eliminado. De lo contrario, significará que el archivo fue añadido a dicho directorio.
+
+Por otro lado, si el evento es de tipo `change` significará que se ha modificado un archivo, lo cual nos lleva a que si añadimos una nota de texto a un directorio, realmente estamos añadiendo un fichero y además metiéndole contenido, por lo que se emitirán dos eventos, uno de cada tipo.
+
+![Watcher function](img/watcher-ej3.png)
+
+### Respuesta a las preguntas del ejercicio 3
+
+¿Qué evento emite el objeto `watcher` cuando se crea un nuevo fichero en el directorio observado? ¿Y cuando se elimina un fichero existente? ¿Y cuando se modifica?
+
+Como ya dije previamente cuando se crea un fichero o se elimina del directorio se produce un evento de tipo `rename`, mientras que si se modifica un fichero se produce un evento de tipo `change`.
+
+¿Cómo haría para mostrar, no solo el nombre, sino también el contenido del fichero, en el caso de que haya sido creado o modificado?
+
+Pues en este caso haría uso de la función `readFile` para abrir el fichero y ya luego podría parsear la información para obtenerla y sacarla luego junto con el mensaje que ya tenía previamente, todo ello por la salida estandar mediante el método `write` del objeto `process`.
+
+¿Cómo harías para que no solo se observase el directorio de un único usuario sino todos los directorios correspondientes a los diferentes usuarios de la aplicación de notas?
+
+Pues almacenaría las rutas de todos los usuarios a observar sus directorios y me los recorrería mientras para cada uno de ellos pondría un `watch`, de esta manera podría ir controlando los cambios de todos los ficheros.
