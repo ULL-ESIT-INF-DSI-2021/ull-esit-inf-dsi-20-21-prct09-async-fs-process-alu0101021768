@@ -179,3 +179,12 @@ En cuanto a la documentación del código, debido a que las soluciones no han si
 
 Por otro lado, en lo relativo al diseño y testing, he utilizado `yargs` para el procesado de comandos y `execSync` como ayuda para la parte de testear los comandos sobre los ejecutables de los ficheros.
 Cabe añadir, que en el ejercicio 3 de detección de cambios me fue complicado testear la función watch así que esa parte la dejé sin testear, pero el resto tiene sus tests. Como excepciones a los tests también están el ejercicio 1 puesto que no requería de código, y la aplicación de procesamiento de notas, que no creí conveniento incluir sus tests.
+
+## Conclusiones y problemas
+
+Nuevamente, he tenido muchos problemas al intentar integrar todo el código desarrollado con los workflows de github, puesto que muchas de las funciones utilizadas para el desarrollo de esta práctica no estaban en la mayor parte de las versione de node. En este caso, los tests y el código me funcionan perfectamente con la versión de node `v15.8.0`, sin embargo, los tests en la version 15 de node, no pasan en la Github Action y por falta de tiempo y desconocimiento respecto al testing en node, pues simplemente he tratado de enlazar los workflows correspondientes, pero no han podido pasar las acciones relativas a los tests y al coveralls.
+
+- [Enlace al informe con la explicación de las resoluciones](https://ull-esit-inf-dsi-2021.github.io/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101021768/)
+- [Enlace al código fuente en typescript](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101021768/tree/main/src)
+- [Enlace a la documentación](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101021768/tree/main/docs)
+- [Enlace a los tests](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101021768/tree/main/tests)
