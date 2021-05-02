@@ -1,7 +1,12 @@
 {
   "entryPoints": [
     "./src/ejercicio-02-a.ts",
-    "./src/ejercicio-02-b.ts"
+    "./src/ejercicio-02-b.ts",
+    "./src/ejercicio-04.ts",
+    "./src/ejercicio-03/ejercicio-03.ts",
+    "./src/ejercicio-03/app.ts",
+    "./src/ejercicio-03/helpers.ts",
+    "./src/ejercicio-03/notes.ts"
 
   ],
   "out": "./docs"

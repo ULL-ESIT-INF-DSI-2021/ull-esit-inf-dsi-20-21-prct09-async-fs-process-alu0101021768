@@ -132,3 +132,50 @@ Pues en este caso haría uso de la función `readFile` para abrir el fichero y y
 Pues almacenaría las rutas de todos los usuarios a observar sus directorios y me los recorrería mientras para cada uno de ellos pondría un `watch`, de esta manera podría ir controlando los cambios de todos los ficheros.
 
 ## Ejercicio 4
+
+Para solucionar este ejercicio hize nuevamente uso de `yargs` para procesar los comandos, con la diferencia de que en este caso si se contemplan más de un comando, como son los siguientes:
+
+![Exercise 4 commands](img/commands.png)
+
+Aquí podemos observar qué es lo que hace cada comando, pero trataré de profundizar un poco más en como he tratado cada comando.
+
+### `identify command`
+
+Para este comando lo que recibimos es una ruta, a través de la cual comprobamos primero si dicha ruta existe para lanzar un error en caso de que no. Si existe la ruta, compruebo si es un directorio haciendo uso de lo siguiente:
+
+```typescript
+lstatSync(argv.path).isDirectory();
+```
+
+Por lo tanto, si la ruta lleva a un directorio, mostraremos un mensaje de que es un directorio, de lo contrario es que es un fichero.
+
+### `create command`
+
+Para este comando lo que recibimos es una ruta también, a través de la cual comprobamos primero si dicha ruta existe para lanzar un error en caso de que sí exista puesto que no se puede crear el directorio si ya existe. Si no existe la ruta spawneo un proceso `mkdir` pasándole la ruta para crearla y luego mostrar un mensaje de éxito.
+
+### `list command`
+
+Para este otro comando, también recibimos una ruta, la cuál comprobamos que existe porque si no no podremos listar sus contenidos. En caso de que exista, spawneamos un proceso `ls` pasando como parametro la ruta al directorio y escribimos la salida del comando por pantalla.
+
+### `show command`
+
+Para este otro comando, se recibe nuevamente una ruta y comprobamos si existe dicha ruta, en cuyo caso hacemos `spawn` de un proceso `cat` pasando como opciones el nombre del fichero del cual queremos mostrar su contenido, y simplemente redirigimos a la pantalla la salida del comando.
+
+### `remove command`
+
+Para este comando se recibe como en el resto de comandos una ruta a un archivo o directorio y se comprueba que exista, porque si no no lo podemos borrar.
+En caso de que exista la ruta, se comprueba si es un directorio o un fichero, ya que si es un fichero se hara un `spawn` de un proceso `rm`, mientras que si es un directorio se hará un `spawn` de un proceso `rmdir`, ambos recibiendo como parámetro la ruta y mostrando un mensaje de éxito al eliminar el archivo o directorio.
+
+### `move command`
+
+Para este último comando, recibimos una ruta de origen y una ruta de destino, por lo tanto, es relevante que comprobemos que la de origen existe, puesto que es desde donde se van a mover o copiar los contenidos.
+Si la ruta de origen es una carpeta, se copiarán todos los contenidos de la misma a la ruta de destino, sin embargo, si es un fichero, se moverá dicho fichero y sus contenidos a la ruta de destino.
+
+Para esto, si la ruta de origen es una carpeta hacemos `spawn` de un proceso `cp -r` y si el origen es un fichero, hacemos `spawn` de un proceso `mv`, ambos obviamente recibiendo como parámetros tanto el origen como el destino.
+
+## Decisiones generales: Diseño | Testing | Documentación
+
+En cuanto a la documentación del código, debido a que las soluciones no han sido programadas orientadas a objetos, no he considerado oportuno comentar cada línea del código puesto que considero que son autoexplicativas.
+
+Por otro lado, en lo relativo al diseño y testing, he utilizado `yargs` para el procesado de comandos y `execSync` como ayuda para la parte de testear los comandos sobre los ejecutables de los ficheros.
+Cabe añadir, que en el ejercicio 3 de detección de cambios me fue complicado testear la función watch así que esa parte la dejé sin testear, pero el resto tiene sus tests. Como excepciones a los tests también están el ejercicio 1 puesto que no requería de código, y la aplicación de procesamiento de notas, que no creí conveniento incluir sus tests.
