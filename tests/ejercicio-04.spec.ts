@@ -94,7 +94,16 @@ describe('Ejercicio 4 - Tests', () => {
       execSync('touch content/file1 content/file2');
       expect(test('move --origin=content --destiny=sameContent')).to
           .equal('Content copied succesfully!\n');
-      execSync('rm -rf content');
+      execSync('rm -r content');
+      execSync('rm -r sameContent');
+    });
+    it(`test('move --origin=file.txt --destiny=samefile.txt') should return ` +
+      `'File moved succesfully!\n'`,
+    () => {
+      execSync('touch file.txt');
+      expect(test('move --origin=file.txt --destiny=samefile.txt')).to
+          .equal('File moved succesfully!\n');
+      execSync('rm samefile.txt');
     });
   });
 });
